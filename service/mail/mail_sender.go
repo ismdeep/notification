@@ -14,6 +14,7 @@ const (
 	ContentTypeText string = "text/plain"
 )
 
+// Pack pack
 type Pack struct {
 	SenderName string
 	Subject    string

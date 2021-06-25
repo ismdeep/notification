@@ -9,6 +9,7 @@ import (
 	"github.com/ismdeep/notification/service/mail"
 )
 
+// PushMailRequest push mail request
 type PushMailRequest struct {
 	SenderName string `json:"sender_name"`
 	Subject    string `json:"subject"`
@@ -17,6 +18,7 @@ type PushMailRequest struct {
 	ToMail     string `json:"to_mail"`
 }
 
+// Check check
 func (p *PushMailRequest) Check() error {
 	if p.SenderName == "" {
 		return errors.New("sender_name can NOT be empty")
@@ -45,6 +47,7 @@ func (p *PushMailRequest) Check() error {
 	return nil
 }
 
+// PushMail push mail
 func PushMail(c *gin.Context) {
 	authKey := c.GetHeader("Authorization")
 	if authKey != fmt.Sprintf("Bearer %v", config.Global.Secret) {

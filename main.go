@@ -1,19 +1,15 @@
 package main
 
 import (
-	"github.com/ismdeep/args"
 	"github.com/ismdeep/notification/api"
-	"github.com/ismdeep/notification/config"
-	"github.com/ismdeep/notification/service/mail"
+	"github.com/ismdeep/notification/load"
 )
 
 func main() {
-	// 加载配置
-	config.LoadConfig(args.GetValue("-c"))
+	load.Config()        // 加载配置
+	load.DB()            // 加载数据库
+	load.DBAutoMigrate() // 数据库自动迁移
+	load.MailService()   // 邮件服务初始化
 
-	// 邮件服务初始化
-	mail.Init()
-
-	// 加载API服务
-	api.LoadAPIServer(false)
+	api.LoadAPIServer(false) // 加载API服务
 }

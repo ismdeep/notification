@@ -2,6 +2,7 @@ package api
 
 import "github.com/gin-gonic/gin"
 
+// Option option
 type Option struct {
 	Code *int
 	Msg  *string

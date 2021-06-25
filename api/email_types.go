@@ -5,6 +5,7 @@ import (
 	"github.com/ismdeep/notification/service/mail"
 )
 
+// GetMailTypes get email type list
 func GetMailTypes(c *gin.Context) {
 	mailTypes := make([]string, 0)
 	mailTypes = append(mailTypes, mail.ContentTypeHTML)
