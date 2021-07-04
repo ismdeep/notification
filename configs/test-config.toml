@@ -1,0 +1,15 @@
+bind = ":8080"
+secret = "1234567890"
+
+[email]
+host = 'smtp.qq.com'
+port = 465
+username = ''
+password = ''
+
+[jwt]
+expire = '720h' # 30天过期时间
+key = '123456'
+
+[mysql]
+dsn = "root:notification1235@tcp(127.0.0.1:3306)/notification?charset=utf8mb4&parseTime=True&loc=Local"

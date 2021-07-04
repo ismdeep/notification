@@ -25,8 +25,6 @@ func TestLogin(t *testing.T) {
 		panic("added is nil")
 	}
 
-
-
 	type args struct {
 		login *request.Login
 	}

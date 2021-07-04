@@ -6,11 +6,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/ismdeep/notification/api/model"
 	"github.com/ismdeep/notification/api/request"
 	"github.com/ismdeep/notification/api/response"
 	"github.com/ismdeep/notification/common"
 	"github.com/ismdeep/notification/config"
-	"github.com/ismdeep/notification/model"
 	"github.com/jinzhu/gorm"
 	"time"
 )

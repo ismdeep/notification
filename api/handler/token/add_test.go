@@ -16,18 +16,18 @@ func TestNewToken(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "TestNewToken-001",
-			args:    args{
+			name: "TestNewToken-001",
+			args: args{
 				userID: 0,
 				req:    nil,
 			},
 			wantErr: true,
 		},
 		{
-			name:    "TestNewToken-002",
-			args:    args{
+			name: "TestNewToken-002",
+			args: args{
 				userID: 1,
-				req:    &request.NewToken{
+				req: &request.NewToken{
 					Name: "ALL",
 				},
 			},

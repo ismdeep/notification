@@ -9,18 +9,17 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	load.Config()
+	load.Config(config.TestConfig)
 
 	for {
 		_, err := gorm.Open("mysql", config.MySQL.DSN)
 		if err != nil {
-			time.Sleep(10 * time.Millisecond)
+			time.Sleep(100 * time.Millisecond)
 			continue
 		}
 
 		break
 	}
-
 
 	m.Run()
 }

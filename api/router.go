@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/ismdeep/notification/api/controller"
 	"github.com/ismdeep/notification/config"
 )
 
@@ -14,8 +15,8 @@ func daemon(router *gin.Engine) {
 // LoadAPIServer 加载API服务器
 func LoadAPIServer(detached bool) {
 	router := gin.Default()
-	router.GET("/mail-types", GetMailTypes)
-	router.POST("/mails", PushMail)
+	router.GET("/api/v1/mail-types", controller.GetMailTypes)
+	router.POST("/api/v1/mails", controller.PushMail)
 
 	if detached {
 		go daemon(router)

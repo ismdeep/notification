@@ -2,8 +2,8 @@ package token
 
 import (
 	"errors"
+	"github.com/ismdeep/notification/api/model"
 	"github.com/ismdeep/notification/common"
-	"github.com/ismdeep/notification/model"
 	"github.com/jinzhu/gorm"
 )
 

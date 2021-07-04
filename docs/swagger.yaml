@@ -1,4 +1,46 @@
+definitions:
+  request.PushMailRequest:
+    properties:
+      content:
+        type: string
+      sender_name:
+        type: string
+      subject:
+        type: string
+      to_mail:
+        type: string
+      type:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /api/v1/mail-types:
+    get:
+      description: 获取邮件类型
+      parameters:
+      - description: Bearer 31a165baebe6dec616b1f8f3207b4273
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      tags:
+      - mail
+  /api/v1/mails:
+    post:
+      description: 发送邮件
+      parameters:
+      - description: Bearer 31a165baebe6dec616b1f8f3207b4273
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON数据
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/request.PushMailRequest'
+      tags:
+      - mail
 swagger: "2.0"

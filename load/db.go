@@ -1,6 +1,6 @@
 package load
 
-import "github.com/ismdeep/notification/model"
+import "github.com/ismdeep/notification/api/model"
 
 // DB 加载数据库
 func DB() {

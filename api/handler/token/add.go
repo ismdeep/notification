@@ -2,12 +2,13 @@ package token
 
 import (
 	"errors"
+	"github.com/ismdeep/notification/api/model"
 	"github.com/ismdeep/notification/api/request"
 	"github.com/ismdeep/notification/api/response"
 	"github.com/ismdeep/notification/common"
-	"github.com/ismdeep/notification/model"
 	"github.com/jinzhu/gorm"
 	uuid "github.com/satori/go.uuid"
+	"log"
 )
 
 // NewToken new token
@@ -40,6 +41,7 @@ func NewToken(userID uint, req *request.NewToken) (*response.TokenDetail, error)
 	}
 
 	if err := model.DB.Save(token).Error; err != nil {
+		log.Println(err)
 		return nil, errors.New("添加失败")
 	}
 

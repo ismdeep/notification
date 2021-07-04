@@ -1,22 +1,18 @@
 package load
 
 import (
-	"github.com/ismdeep/args"
+	"fmt"
 	"github.com/ismdeep/notification/config"
 	"os"
 )
 
 // Config 加载配置
-func Config() {
-	configPath := ""
-	configPath = args.GetValue("-c")
-	if configPath == "" {
-		configPath = os.Getenv("NOTIFICATION_CONFIG_TOML")
-	}
-
-	if configPath == "" {
+func Config(fileName string) {
+	configFolderPath := os.Getenv("NOTIFICATION_CONFIGS")
+	if configFolderPath == "" {
 		panic("config path is not specified")
 	}
 
+	configPath := fmt.Sprintf("%v/%v", configFolderPath, fileName)
 	config.LoadConfig(configPath)
 }

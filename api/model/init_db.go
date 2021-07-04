@@ -3,7 +3,7 @@ package model
 import (
 	"github.com/ismdeep/notification/config"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/mysql" // load mysql driver
 	"time"
 )
 
@@ -35,4 +35,5 @@ func AutoMigrate() {
 	DB.AutoMigrate(&User{})
 	DB.AutoMigrate(&Auth{})
 	DB.AutoMigrate(&Token{})
+	DB.AutoMigrate(&Mail{})
 }

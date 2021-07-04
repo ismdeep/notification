@@ -1,9 +1,9 @@
 package token
 
 import (
+	"github.com/ismdeep/notification/api/model"
 	"github.com/ismdeep/notification/api/response"
 	"github.com/ismdeep/notification/common"
-	"github.com/ismdeep/notification/model"
 	"github.com/jinzhu/gorm"
 )
 
@@ -17,7 +17,7 @@ func List(userID uint) ([]*response.TokenDetail, error) {
 
 		return nil, common.ErrSystemError
 	}
-	
+
 	tokens := make([]*model.Token, 0)
 
 	if err := model.DB.Where("user_id = ?", userID).Find(&tokens).Error; err != nil {

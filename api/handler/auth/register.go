@@ -3,10 +3,10 @@ package auth
 import (
 	"crypto/md5"
 	"fmt"
+	"github.com/ismdeep/notification/api/model"
 	"github.com/ismdeep/notification/api/request"
 	"github.com/ismdeep/notification/api/response"
 	"github.com/ismdeep/notification/common"
-	"github.com/ismdeep/notification/model"
 )
 
 // Register 注册
@@ -37,8 +37,8 @@ func Register(req *request.Register) (*response.Register, error) {
 
 	// 写入密码
 	auth := &model.Auth{
-		UserID:  user.ID,
-		Digest:  fmt.Sprintf("%x", md5.Sum([]byte(req.Password))),
+		UserID: user.ID,
+		Digest: fmt.Sprintf("%x", md5.Sum([]byte(req.Password))),
 	}
 	if err := model.DB.Save(auth).Error; err != nil {
 		return nil, common.ErrSystemError

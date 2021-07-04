@@ -6,9 +6,10 @@ package docs
 import (
 	"bytes"
 	"encoding/json"
+	"strings"
+
 	"github.com/alecthomas/template"
 	"github.com/swaggo/swag"
-	"strings"
 )
 
 var doc = `{
@@ -22,7 +23,73 @@ var doc = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/api/v1/mail-types": {
+            "get": {
+                "description": "获取邮件类型",
+                "tags": [
+                    "mail"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 31a165baebe6dec616b1f8f3207b4273",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/api/v1/mails": {
+            "post": {
+                "description": "发送邮件",
+                "tags": [
+                    "mail"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 31a165baebe6dec616b1f8f3207b4273",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.PushMailRequest"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "request.PushMailRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "sender_name": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "to_mail": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }`
 
 type swaggerInfo struct {
