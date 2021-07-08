@@ -31,8 +31,8 @@ func Register(req *request.Register) (*response.Register, error) {
 	}
 
 	// 写入用户
-	if err := model.DB.Save(user).Error; err != nil {
-		return nil, common.ErrSystemError
+	if err := model.DB.Create(user).Error; err != nil {
+		return nil, common.ErrDatabaseOperateFailed
 	}
 
 	// 写入密码
@@ -41,7 +41,7 @@ func Register(req *request.Register) (*response.Register, error) {
 		Digest: fmt.Sprintf("%x", md5.Sum([]byte(req.Password))),
 	}
 	if err := model.DB.Save(auth).Error; err != nil {
-		return nil, common.ErrSystemError
+		return nil, common.ErrDatabaseOperateFailed
 	}
 
 	return &response.Register{UserID: user.ID}, nil

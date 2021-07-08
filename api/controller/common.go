@@ -1,6 +1,32 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/ismdeep/notification/config"
+)
+
+// UserInfo user info
+type UserInfo struct {
+	ID       uint
+	Username string
+	Nickname string
+}
+
+// AuthUser auth user
+func AuthUser(c *gin.Context) *UserInfo {
+	authKey := c.GetHeader("Authorization")
+	if authKey != fmt.Sprintf("Bearer %v", config.Global.Secret) {
+		return nil
+	}
+
+	// @TODO
+	return &UserInfo{
+		ID:       0,
+		Username: "",
+		Nickname: "",
+	}
+}
 
 // Option option
 type Option struct {
@@ -9,18 +35,20 @@ type Option struct {
 	Data *interface{}
 }
 
-// WithCode With Code
-func WithCode(code int) *Option {
-	val := code
-	return &Option{
-		Code: &val,
-	}
-}
-
 // WithMsg With Msg
 func WithMsg(msg string) *Option {
 	return &Option{
 		Msg: &msg,
+	}
+}
+
+// WithError With error
+func WithError(err error) *Option {
+	val := 1
+	msg := err.Error()
+	return &Option{
+		Code: &val,
+		Msg:  &msg,
 	}
 }
 
@@ -50,14 +78,8 @@ func renderRespData(defaultCode int, options ...*Option) map[string]interface{} 
 	return respData
 }
 
-// Ok Ok
-func Ok(c *gin.Context, options ...*Option) {
+// JSON JSON
+func JSON(c *gin.Context, options ...*Option) {
 	respData := renderRespData(0, options...)
-	c.JSON(0, respData)
-}
-
-// Error Error
-func Error(c *gin.Context, options ...*Option) {
-	respData := renderRespData(500, options...)
 	c.JSON(0, respData)
 }

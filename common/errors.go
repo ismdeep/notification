@@ -20,4 +20,7 @@ const (
 
 	// ErrUserHasBeenBaned 账号被禁用
 	ErrUserHasBeenBaned = Error("账号被禁用")
+
+	// ErrDatabaseOperateFailed 数据库操作失败
+	ErrDatabaseOperateFailed = Error("数据库操作失败")
 )
