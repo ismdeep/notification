@@ -19,13 +19,9 @@ func Register(req *request.Register) (*response.Register, error) {
 		return nil, common.ErrBadRequest
 	}
 
-	if req.Nickname == "" {
-		req.Nickname = req.Username
-	}
-
 	user := &model.User{
 		Username: req.Username,
-		Nickname: req.Nickname,
+		Nickname: req.Username,
 		Avatar:   "",
 		Enabled:  true,
 	}

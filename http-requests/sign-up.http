@@ -1,0 +1,9 @@
+POST {{host}}/api/v1/sign-up
+Content-Type: application/json
+
+{
+  "username": "user001",
+  "password": "12345678"
+}
+
+### 注册用户

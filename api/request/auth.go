@@ -5,7 +5,6 @@ import "errors"
 // Register 注册请求
 type Register struct {
 	Username string `json:"username"`
-	Nickname string `json:"nickname"`
 	Password string `json:"password"`
 }
 
