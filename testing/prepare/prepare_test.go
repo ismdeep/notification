@@ -18,7 +18,6 @@ func TestMain(m *testing.M) {
 
 	_, err = authHandler.Register(&request.Register{
 		Username: "user001",
-		Nickname: "L. Jiang",
 		Password: "1234567890",
 	})
 	if err != nil {
