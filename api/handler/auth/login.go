@@ -1,11 +1,10 @@
 package auth
 
 import (
-	"crypto/md5"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/ismdeep/digest"
 	"github.com/ismdeep/notification/api/model"
 	"github.com/ismdeep/notification/api/request"
 	"github.com/ismdeep/notification/api/response"
@@ -42,17 +41,7 @@ func Login(req *request.Login) (*response.Login, error) {
 	}
 
 	// 2. 检查密码
-	auth := &model.Auth{}
-	if err := model.DB.Where("user_id = ?", user.ID).First(auth).Error; err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return nil, errors.New("请设置密码")
-
-		}
-
-		return nil, common.ErrSystemError
-	}
-
-	if auth.Digest != fmt.Sprintf("%x", md5.Sum([]byte(req.Password))) {
+	if !digest.Verify(user.Digest, req.Password) {
 		return nil, errors.New("密码错误")
 	}
 

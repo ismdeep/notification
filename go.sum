@@ -52,6 +52,8 @@ github.com/golang/protobuf v1.3.3 h1:gyjaxf+svBWX08ZjK86iN9geUJF0H6gp2IRKX6Nf6/I
 github.com/golang/protobuf v1.3.3/go.mod h1:vzj43D7+SQXF/4pzW/hwtAqwc6iTitCiVSaWz5lYuqw=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
+github.com/ismdeep/digest v0.0.1 h1:tAbQzpQy7l+ofNpU9Xqv+9CDt9Kmzug3I29SB3xYfyE=
+github.com/ismdeep/digest v0.0.1/go.mod h1:aC3khPKZrwimvvUezIsNjfmT7bZp2tTOGcOyckqUh1c=
 github.com/ismdeep/log v0.0.3 h1:qk4IVUXaVpa7vcu4IW91Ahaws38AQfOUGCmDC+B2FYw=
 github.com/ismdeep/log v0.0.3/go.mod h1:0nH0jKic5su3Bd+AE+BHG1iCZT/iUGRuYzliOSL+nMQ=
 github.com/jinzhu/gorm v1.9.16 h1:+IyIjPEABKRpsu/F8OvDPy9fyQlgsg2luMV2ZIH5i5o=

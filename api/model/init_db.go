@@ -33,7 +33,6 @@ func InitDatabase() {
 // AutoMigrate 自动迁移
 func AutoMigrate() {
 	DB.AutoMigrate(&User{})
-	DB.AutoMigrate(&Auth{})
 	DB.AutoMigrate(&Token{})
 	DB.AutoMigrate(&Mail{})
 }

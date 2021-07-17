@@ -30,6 +30,7 @@ var doc = `{
                 "tags": [
                     "mail"
                 ],
+                "summary": "获取邮件类型",
                 "parameters": [
                     {
                         "type": "string",
@@ -45,8 +46,9 @@ var doc = `{
             "post": {
                 "description": "发送邮件",
                 "tags": [
-                    "mail"
+                    "Mail"
                 ],
+                "summary": "发送邮件",
                 "parameters": [
                     {
                         "type": "string",
@@ -66,9 +68,106 @@ var doc = `{
                     }
                 ]
             }
+        },
+        "/api/v1/sign-in": {
+            "put": {
+                "description": "登录",
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 31a165baebe6dec616b1f8f3207b4273",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/api/v1/sign-up": {
+            "post": {
+                "description": "注册",
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "注册",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 31a165baebe6dec616b1f8f3207b4273",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/api/v1/tokens": {
+            "post": {
+                "description": "生成Token",
+                "tags": [
+                    "Token"
+                ],
+                "summary": "生成Token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 31a165baebe6dec616b1f8f3207b4273",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.NewToken"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.TokenDetail"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/wecom-text-messages": {
+            "post": {
+                "description": "推送企业微信机器人消息",
+                "tags": [
+                    "WeCom"
+                ],
+                "summary": "推送企业微信机器人消息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 31a165baebe6dec616b1f8f3207b4273",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ]
+            }
         }
     },
     "definitions": {
+        "request.NewToken": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "request.PushMailRequest": {
             "type": "object",
             "properties": {
@@ -81,10 +180,24 @@ var doc = `{
                 "subject": {
                     "type": "string"
                 },
-                "to_mail": {
-                    "type": "string"
+                "to_mail_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.TokenDetail": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "token": {
                     "type": "string"
                 }
             }
