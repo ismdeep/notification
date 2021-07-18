@@ -35,3 +35,7 @@ test-clean: test-down
 test-renew:
 	-make test-clean
 	-make test-create
+
+pre-push:
+	go mod tidy
+	make test

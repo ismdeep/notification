@@ -6,7 +6,6 @@ require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/brianvoe/gofakeit/v6 v6.5.0
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.7.2
 	github.com/ismdeep/digest v0.0.1
 	github.com/ismdeep/jwt v0.0.2

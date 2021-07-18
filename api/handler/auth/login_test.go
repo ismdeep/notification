@@ -14,7 +14,6 @@ func TestLogin(t *testing.T) {
 
 	added, err := Register(&request.Register{
 		Username: username,
-		Nickname: gofakeit.Name(),
 		Password: password,
 	})
 	if err != nil {

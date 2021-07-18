@@ -32,7 +32,6 @@ func TestRegister(t *testing.T) {
 			args: args{
 				register: &request.Register{
 					Username: "",
-					Nickname: "",
 					Password: "",
 				},
 			},
@@ -44,7 +43,6 @@ func TestRegister(t *testing.T) {
 			args: args{
 				register: &request.Register{
 					Username: gofakeit.Username(),
-					Nickname: "",
 					Password: "",
 				},
 			},
@@ -56,7 +54,6 @@ func TestRegister(t *testing.T) {
 			args: args{
 				register: &request.Register{
 					Username: gofakeit.Username(),
-					Nickname: gofakeit.Name(),
 					Password: "123456",
 				},
 			},
