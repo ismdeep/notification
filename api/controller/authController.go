@@ -10,7 +10,7 @@ import (
 
 // SignUp 注册
 // @Summary 注册
-// @Author @uniontech.com
+// @Author l.jiang.1024@gmail.com
 // @Description 注册
 // @Tags Auth
 // @Param Authorization	header	string true "Bearer 31a165baebe6dec616b1f8f3207b4273"
@@ -34,7 +34,7 @@ func SignUp(c *gin.Context) {
 
 // SignIn 登录
 // @Summary 登录
-// @Author @uniontech.com
+// @Author l.jiang.1024@gmail.com
 // @Description 登录
 // @Tags Auth
 // @Param Authorization	header	string true "Bearer 31a165baebe6dec616b1f8f3207b4273"
@@ -58,7 +58,7 @@ func SignIn(c *gin.Context) {
 
 // GetUserInfo 用户信息
 // @Summary 用户信息
-// @Author jianglinwei@uniontech.com
+// @Author l.jiang.1024@gmail.com
 // @Description 用户信息
 // @Tags Auth
 // @Param Authorization	header	string true "Bearer 31a165baebe6dec616b1f8f3207b4273"

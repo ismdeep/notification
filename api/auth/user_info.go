@@ -1,8 +1,10 @@
 package auth
 
 import (
+	"encoding/json"
 	"errors"
 	"github.com/gin-gonic/gin"
+	"github.com/ismdeep/jwt"
 	"github.com/ismdeep/notification/api/model"
 	"github.com/ismdeep/notification/common"
 	"github.com/jinzhu/gorm"
@@ -19,21 +21,27 @@ type UserInfo struct {
 
 // GetUserInfo 获取用户信息
 func GetUserInfo(c *gin.Context) (*UserInfo, error) {
-	authKey := c.GetHeader("Authorization")
-	if strings.Contains(authKey, "Bearer ") {
-		return nil, common.ErrNotImplemented
+
+	// 1. 从 Authorization 中获取用户信息
+	jwtToken := c.GetHeader("Authorization")
+	if strings.Contains(jwtToken, "Bearer ") {
+		jwtToken = strings.Split(jwtToken, " ")[1]
+		if userInfo, err := JWTVerify(jwtToken); err == nil {
+			return userInfo, nil
+		}
+		return nil, common.ErrNotLogin
 	}
 
+	// 2. 从 Token 中获取用户信息
 	tokenKey := c.GetHeader("Token")
-	if tokenKey == "" {
-		return nil, common.ErrNotLogin
-	}
-	userInfo, err := TokenVerify(tokenKey)
-	if err != nil {
+	if tokenKey != "" {
+		if userInfo, err := TokenVerify(tokenKey); err == nil {
+			return userInfo, nil
+		}
 		return nil, common.ErrNotLogin
 	}
 
-	return userInfo, nil
+	return nil, common.ErrNotLogin
 }
 
 // JWTSign jwt签名
@@ -42,17 +50,32 @@ func JWTSign(userInfo *UserInfo) (string, error) {
 		return "", errors.New("bad request")
 	}
 
-	//marshal, err := json.Marshal(userInfo)
-	//if err != nil {
-	//	return "", err
-	//}
+	userInfoBytes, err := json.Marshal(userInfo)
+	if err != nil {
+		return "", err
+	}
 
-	return "", common.ErrNotImplemented
+	token, err := jwt.GenerateToken(string(userInfoBytes))
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
 }
 
 // JWTVerify jwt验证
 func JWTVerify(jwtToken string) (*UserInfo, error) {
-	return nil, common.ErrNotImplemented
+	token, err := jwt.VerifyToken(jwtToken)
+	if err != nil {
+		return nil, err
+	}
+
+	userInfo := &UserInfo{}
+	if err := json.Unmarshal([]byte(token), userInfo); err != nil {
+		return nil, err
+	}
+
+	return userInfo, nil
 }
 
 // TokenVerify token验证

@@ -10,7 +10,7 @@ import (
 
 // GenerateToken 生成Token
 // @Summary 生成Token
-// @Author jianglinwei@uniontech.com
+// @Author l.jiang.1024@gmail.com
 // @Description 生成Token
 // @Tags Token
 // @Param Authorization	header	string true "Bearer 31a165baebe6dec616b1f8f3207b4273"

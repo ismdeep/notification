@@ -1,17 +1,14 @@
 package auth
 
 import (
-	"encoding/json"
 	"errors"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/ismdeep/digest"
+	"github.com/ismdeep/notification/api/auth"
 	"github.com/ismdeep/notification/api/model"
 	"github.com/ismdeep/notification/api/request"
 	"github.com/ismdeep/notification/api/response"
 	"github.com/ismdeep/notification/common"
-	"github.com/ismdeep/notification/config"
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 // JWTUserInfo jwt user info
@@ -51,28 +48,18 @@ func Login(req *request.Login) (*response.Login, error) {
 	}
 
 	// 4. 签名
-	binData, err := json.Marshal(&JWTUserInfo{
-		UserID:   user.ID,
+	jwtToken, err := auth.JWTSign(&auth.UserInfo{
+		ID:       user.ID,
 		Username: user.Username,
+		Nickname: user.Nickname,
+		Avatar:   user.Avatar,
 	})
 	if err != nil {
-		return nil, common.ErrSystemError
-	}
-	expireDuration, err := time.ParseDuration(config.JWT.Expire)
-	if err != nil {
-		return nil, common.ErrSystemError
-	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"uid": string(binData),
-		"exp": time.Now().Add(expireDuration).Unix(),
-	})
-	accessToken, err := token.SignedString([]byte(config.JWT.Key))
-	if err != nil {
-		return nil, common.ErrSystemError
+		return nil, err
 	}
 
 	return &response.Login{
 		UserID:      user.ID,
-		AccessToken: accessToken,
+		AccessToken: jwtToken,
 	}, nil
 }

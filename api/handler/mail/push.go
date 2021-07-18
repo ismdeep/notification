@@ -8,8 +8,8 @@ import (
 	"strings"
 )
 
-// PushMail push mail
-func PushMail(userID uint, req *request.PushMailRequest) error {
+// AddMail push mail
+func AddMail(userID uint, req *request.PushMailRequest) error {
 	if req == nil {
 		return common.ErrBadRequest
 	}

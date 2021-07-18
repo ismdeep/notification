@@ -2,8 +2,10 @@ package mail
 
 import (
 	"github.com/ismdeep/log"
+	"github.com/ismdeep/notification/api/store/mail"
 	"github.com/ismdeep/notification/config"
 	"gopkg.in/gomail.v2"
+	"strings"
 	"time"
 )
 
@@ -14,15 +16,6 @@ const (
 	ContentTypeText string = "text/plain"
 )
 
-// Pack pack
-type Pack struct {
-	SenderName string
-	Subject    string
-	Type       string
-	Content    string
-	ToMail     string
-}
-
 var mailSenderService struct {
 	Host     string
 	Port     int
@@ -32,25 +25,36 @@ var mailSenderService struct {
 
 func daemon() {
 	for {
-		pack := <-packChan
-
-		m := gomail.NewMessage()
-		m.SetHeader("From", m.FormatAddress(mailSenderService.Username, pack.SenderName))
-		m.SetHeader("To", pack.ToMail)
-		m.SetHeader("Subject", pack.Subject)
-		m.SetBody(pack.Type, pack.Content)
-		d := gomail.NewDialer(mailSenderService.Host, mailSenderService.Port, mailSenderService.Username, mailSenderService.Password)
-		if err := d.DialAndSend(m); err != nil {
-			log.Error("service.mail.daemon", "err", err, "to", pack.ToMail, "subject", pack.Subject)
-			packChan <- pack
+		mails, err := mail.GetUnsentMails(10)
+		if err != nil {
 			time.Sleep(100 * time.Millisecond)
 			continue
 		}
-		log.Info("service.mail.daemon", "msg", "email send successfully", "to", pack.ToMail, "subject", pack.Subject)
+
+		if len(mails) <= 0 {
+			time.Sleep(100 * time.Millisecond)
+			continue
+		}
+
+		for _, mailItem := range mails {
+			m := gomail.NewMessage()
+			m.SetHeader("From", m.FormatAddress(mailSenderService.Username, mailItem.SenderName))
+			m.SetHeader("To", strings.Split(mailItem.ToMailList, ";")...)
+			m.SetHeader("Subject", mailItem.Subject)
+			m.SetBody(mailItem.Type, mailItem.Content)
+			d := gomail.NewDialer(mailSenderService.Host, mailSenderService.Port, mailSenderService.Username, mailSenderService.Password)
+			if err1 := d.DialAndSend(m); err1 == nil {
+				// 发送成功，标记为已发送
+				if err := mail.MarkedAsSent(mailItem.ID); err != nil {
+					log.Warn("service.mail.daemon", "err", err)
+				}
+
+				log.Info("service.mail.daemon", "msg", "email send successfully", "to", mailItem.ToMailList, "subject", mailItem.Subject)
+			}
+
+		}
 	}
 }
-
-var packChan = make(chan *Pack, 1000)
 
 // Init 初始化
 func Init() {
@@ -62,9 +66,4 @@ func Init() {
 	go func() {
 		daemon()
 	}()
-}
-
-// Push 推送邮件
-func Push(mailPack *Pack) {
-	packChan <- mailPack
 }

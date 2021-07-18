@@ -43,7 +43,7 @@ func SendEmail(c *gin.Context) {
 		return
 	}
 
-	if err := mailHandler.PushMail(userInfo.ID, req); err != nil {
+	if err := mailHandler.AddMail(userInfo.ID, req); err != nil {
 		JSON(c, WithError(err))
 		return
 	}

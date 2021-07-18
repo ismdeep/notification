@@ -20,7 +20,8 @@ type Config struct {
 		Key    string
 	} `json:"jwt"`
 	MySQL struct {
-		DSN string
+		DSN     string
+		LogMode bool
 	} `json:"mysql"`
 }
 

@@ -102,8 +102,8 @@ func TestPushMail(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := PushMail(tt.args.userID, tt.args.req); (err != nil) != tt.wantErr {
-				t.Errorf("PushMail() error = %v, wantErr %v", err, tt.wantErr)
+			if err := AddMail(tt.args.userID, tt.args.req); (err != nil) != tt.wantErr {
+				t.Errorf("AddMail() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}

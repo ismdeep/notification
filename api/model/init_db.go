@@ -17,7 +17,7 @@ func InitDatabase() {
 		panic(err)
 	}
 
-	db.LogMode(true)
+	db.LogMode(config.MySQL.LogMode)
 
 	//设置连接池
 	//空闲
