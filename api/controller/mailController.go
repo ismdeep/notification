@@ -6,6 +6,7 @@ import (
 	"github.com/ismdeep/notification/api/auth"
 	mailHandler "github.com/ismdeep/notification/api/handler/mail"
 	"github.com/ismdeep/notification/api/request"
+	"github.com/ismdeep/notification/common"
 )
 
 // GetMailTypes 获取邮件类型
@@ -49,5 +50,31 @@ func SendEmail(c *gin.Context) {
 	}
 
 	JSON(c, WithMsg("mail sent"))
+	return
+}
+
+// GetMails 查看邮件列表
+// @Title 查看邮件列表
+// @Author @uniontech.com
+// @Description 查看邮件列表
+// @Tags Mail
+// @Param Authorization	header	string true "Bearer 31a165baebe6dec616b1f8f3207b4273"
+// @Param body body	request. true "JSON数据"
+// @Success 200 {object} response.
+// @Router	/api/v1/mails [get]
+func GetMails(c *gin.Context) {
+	userInfo, err := auth.GetUserInfo(c)
+	if err != nil {
+		JSON(c, WithError(common.ErrNotLogin))
+		return
+	}
+
+	mails, err := mailHandler.GetMails(userInfo.ID)
+	if err != nil {
+		JSON(c, WithError(err))
+		return
+	}
+
+	JSON(c, WithData(mails))
 	return
 }
