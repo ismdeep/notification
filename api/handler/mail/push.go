@@ -26,6 +26,7 @@ func AddMail(userID uint, req *request.PushMailRequest) error {
 	mail := &model.Mail{
 		UserID:     userID,
 		Status:     model.StatusPending,
+		SenderName: req.SenderName,
 		Type:       req.Type,
 		Subject:    req.Subject,
 		Content:    req.Content,
