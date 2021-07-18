@@ -14,6 +14,7 @@ func LoadAPIServer(detached bool) {
 	router.GET("/api/v1/user/info", GetUserInfo)   // 用户信息
 	router.GET("/api/v1/mail-types", GetMailTypes) // 邮件类型
 	router.POST("/api/v1/mails", SendEmail)        // 发送邮件
+	router.GET("/api/v1/mails", GetMails)          // 查看邮件列表
 	router.POST("/api/v1/tokens", GenerateToken)   // 生成Token
 
 	if err := router.Run(config.Global.Bind); err != nil {

@@ -55,7 +55,7 @@ func SendEmail(c *gin.Context) {
 
 // GetMails 查看邮件列表
 // @Title 查看邮件列表
-// @Author @uniontech.com
+// @Author l.jiang.1024@gmail.com
 // @Description 查看邮件列表
 // @Tags Mail
 // @Param Authorization	header	string true "Bearer 31a165baebe6dec616b1f8f3207b4273"
