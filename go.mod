@@ -7,6 +7,7 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/brianvoe/gofakeit/v6 v6.5.0
 	github.com/gin-gonic/gin v1.7.2
+	github.com/ismdeep/args v0.0.2
 	github.com/ismdeep/digest v0.0.1
 	github.com/ismdeep/jwt v0.0.2
 	github.com/ismdeep/log v0.0.3
