@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  db:
+    container_name: notification-db
+    image: mysql:8.0
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_DATABASE: notification
+      MYSQL_ROOT_PASSWORD: notification123456
+    volumes:
+      - './.cache/docker-data/db:/var/lib/mysql'
+    ports:
+      - '3306:3306'
+    restart: always

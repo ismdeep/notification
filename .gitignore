@@ -1,0 +1,6 @@
+# JetBrains
+/.idea/
+
+# Cache
+/.cache/
+/bin/
