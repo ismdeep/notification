@@ -13,7 +13,6 @@ import (
 	"github.com/ismdeep/log"
 	"go.uber.org/zap"
 
-	"github.com/ismdeep/notification/app/server/auth"
 	"github.com/ismdeep/notification/app/server/conf"
 	"github.com/ismdeep/notification/app/server/store"
 	"github.com/ismdeep/notification/pkg/core"
@@ -54,16 +53,13 @@ func init() {
 		customerMsgID := c.Param("customer_msg_id")
 
 		// token
-		token := c.GetHeader("X-Token")
-		core.PanicIf(
-			core.IfErr(
-				token == "", errors.New("unauthorized")))
+		token := store.Token.GetByToken(c.GetHeader("X-Token"))
 
 		cmd := exec.Command("bash",
 			"-c",
 			fmt.Sprintf(
 				`base64 -d | openssl aes-256-cbc -d -salt -pbkdf2 -iter 1024 -k "%v"`,
-				store.Token.GetByToken(token).AESKey))
+				token.AESKey))
 
 		// input from http post body
 		cmd.Stdin = c.Request.Body
@@ -83,7 +79,7 @@ func init() {
 					fmt.Errorf("stderr: %v", output2.String())))
 		}
 
-		store.Msg.Write(auth.GetUserInfo(c).ID, customerMsgID, output.String())
+		store.Msg.Write(token.UserID, customerMsgID, output.String())
 
 		return gin.H{
 			"msg": "ok",
