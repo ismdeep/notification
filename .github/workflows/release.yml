@@ -50,5 +50,5 @@ jobs:
           script: |
             set -e
             cd /data/deploy/notification
-            docker-compose pull
-            docker-compose up -d
+            docker-compose pull --quiet 2>&1
+            docker-compose up -d 2>&1
