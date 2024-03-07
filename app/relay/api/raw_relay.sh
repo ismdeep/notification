@@ -1,0 +1,1 @@
+curl -fsSL -X PUT -d @- %v/api/v1/msg/%v

@@ -7,6 +7,7 @@ import (
 	"github.com/sethvargo/go-envconfig"
 
 	"github.com/ismdeep/notification/internal/solidutil"
+	"github.com/ismdeep/notification/pkg/core"
 	"github.com/ismdeep/notification/pkg/jwt"
 )
 
@@ -35,9 +36,7 @@ type s struct {
 var ROOT s
 
 func init() {
-	if err := envconfig.Process(context.Background(), &ROOT); err != nil {
-		panic(err)
-	}
+	core.PanicIf(envconfig.Process(context.Background(), &ROOT))
 
 	// check proxy
 	if ROOT.Proxy.Socks5 != "" {

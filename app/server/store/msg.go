@@ -1,7 +1,6 @@
 package store
 
 import (
-	"errors"
 	"time"
 
 	"gorm.io/gorm"
@@ -26,8 +25,9 @@ func (receiver *msgStore) Write(userID string, customerMsgID string, content str
 					Where("id = ?", msgID).
 					Count(&cnt).Error)
 
-			core.PanicIf(
-				core.IfErr(cnt > 0, errors.New("message has written")))
+			if cnt > 0 {
+				return nil
+			}
 
 			core.PanicIf(
 				db.Create(&model.Msg{
