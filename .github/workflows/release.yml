@@ -34,9 +34,11 @@ jobs:
       - name: Docker release
         run: |
           set -eu
-          docker buildx build --platform linux/amd64 --pull --push -t ismdeep/notification:${IMAGE_TAG} .
+          docker buildx build --platform linux/amd64 --pull --push -t ismdeep/notification:${IMAGE_TAG}       -f dockerfile-server .
+          docker buildx build --platform linux/amd64 --pull --push -t ismdeep/notification-relay:${IMAGE_TAG} -f dockerfile-relay  .
           echo "----------------------------------------------------------------------"
           echo "ismdeep/notification:${IMAGE_TAG}"
+          echo "ismdeep/notification-relay:${IMAGE_TAG}"
           echo "----------------------------------------------------------------------"
 
       - name: Deploy
