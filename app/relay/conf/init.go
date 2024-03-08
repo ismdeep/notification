@@ -17,6 +17,9 @@ type s struct {
 	Server struct {
 		Bind string `env:"SERVER_BIND,default=0.0.0.0:7080"`
 	}
+	Authorization struct {
+		RelayAuth string `env:"AUTHORIZATION_RELAY_AUTH,default=DEFAULT-RELAY-AUTH-123456"`
+	}
 	Forward struct {
 		Targets    string `env:"FORWARD_TARGETS"`
 		SecurePipe struct {
@@ -44,6 +47,11 @@ func init() {
 
 	core.PanicIf(
 		core.IfErr(ROOT.Forward.Targets == "", errors.New("FORWARD_TARGETS is empty. e.g. http://192.168.56.1:7080;http://172.10.0.1:7080")))
+
+	core.WarnIf(
+		core.IfErr(
+			ROOT.Authorization.RelayAuth == "DEFAULT-RELAY-AUTH-123456",
+			errors.New("==================== SECURITY ALERT: THIS RELAY SERVER IS CURRENTLY USING DEFAULT AUTHORIZATION_RELAY_AUTH, WHICH MAY POSE A SECURITY RISK. ====================")))
 
 	targets = strings.Split(ROOT.Forward.Targets, ";")
 	for idx, target := range targets {
