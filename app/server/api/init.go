@@ -47,8 +47,12 @@ func init() {
 	eng.GET("/api/v1/tokens", Auth, cjson(GetTokenList))   // 获取Token列表
 
 	// MSG
-	eng.PUT("/api/v1/msg/:customer_msg_id", cjson(func(c *gin.Context) any {
-
+	eng.PUT("/api/v1/msg/:customer_msg_id", func(c *gin.Context) {
+		defer func() {
+			if r := recover(); r != nil {
+				c.String(http.StatusInternalServerError, fmt.Sprintf("ERROR: %v\n", r))
+			}
+		}()
 		// customer_msg_id
 		customerMsgID := c.Param("customer_msg_id")
 
@@ -79,12 +83,9 @@ func init() {
 					fmt.Errorf("stderr: %v", output2.String())))
 		}
 
-		store.Msg.Write(token.UserID, customerMsgID, output.String())
-
-		return gin.H{
-			"msg": "ok",
-		}
-	}))
+		msgID := store.Msg.Write(token.UserID, customerMsgID, output.String())
+		c.String(http.StatusOK, fmt.Sprintf("%v %v\n", msgID, customerMsgID))
+	})
 }
 
 func Run() {
