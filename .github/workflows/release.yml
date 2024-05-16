@@ -2,8 +2,6 @@ name: Release
 on:
   push:
   workflow_dispatch:
-  schedule:
-    - cron: '8 8 * * *'
 
 jobs:
   release:
